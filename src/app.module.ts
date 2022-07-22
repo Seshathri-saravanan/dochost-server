@@ -14,6 +14,9 @@ import { UserProfile } from './userprofile/userprofile.model';
 import { Project } from './project/project.model';
 import { ProjectUser } from './projectuser/projectuser.model';
 import { Page } from './page/page.model';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 /*
 
@@ -31,9 +34,6 @@ import { Page } from './page/page.model';
       models: [User, UserProfile, Project, ProjectUser, Page],
       autoLoadModels: true,
       synchronize: true,
-      sync: {
-        force: true,
-      },
     }),
     ConfigModule.forRoot({
       isGlobal: true,
@@ -43,8 +43,15 @@ import { Page } from './page/page.model';
     ProjectModule,
     ProjectuserModule,
     PageModule,
+    AuthModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+  ],
 })
 export class AppModule {}

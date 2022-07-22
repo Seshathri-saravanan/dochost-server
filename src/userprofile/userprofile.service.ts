@@ -1,4 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/sequelize';
+import { UserProfile } from './userprofile.model';
 
 @Injectable()
-export class UserprofileService {}
+export class UserprofileService {
+  constructor(
+    @InjectModel(UserProfile)
+    private userProfileModel: typeof UserProfile,
+  ) {}
+
+  async createUserProfile(userId: string, userProfile: { name: string }) {
+    return await this.userProfileModel.create({ userId, ...userProfile });
+  }
+}

@@ -1,4 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, forwardRef, Get, Inject } from '@nestjs/common';
+import { get } from 'http';
+import { AuthService } from 'src/auth/auth.service';
 import { UserService } from './user.service';
 
 @Controller('user')

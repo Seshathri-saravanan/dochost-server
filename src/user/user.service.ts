@@ -52,4 +52,10 @@ export class UserService {
     });
     return { user, userProfile, project, page, projectuser };
   }
+
+  async findOne(email: string) {
+    const user = await this.userModel.findOne({ where: { email } });
+    console.log(user instanceof User);
+    return user;
+  }
 }
