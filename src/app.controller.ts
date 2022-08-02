@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Post,
   Request,
   UseGuards,
 } from '@nestjs/common';
@@ -24,7 +25,7 @@ export class AppController {
   }
 
   @Public()
-  @Get('login')
+  @Post('login')
   login(@Body() payload: { email: string; password: string }) {
     return this.authService.login({ ...payload });
   }

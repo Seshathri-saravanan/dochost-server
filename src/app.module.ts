@@ -34,6 +34,9 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       models: [User, UserProfile, Project, ProjectUser, Page],
       autoLoadModels: true,
       synchronize: true,
+      sync: {
+        alter: true,
+      },
     }),
     ConfigModule.forRoot({
       isGlobal: true,

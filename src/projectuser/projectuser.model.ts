@@ -10,7 +10,7 @@ export class ProjectUser extends Model {
 
   @ForeignKey(() => Project)
   @Column
-  projectId: string;
+  projectId: number;
 
   @Column
   role: string;

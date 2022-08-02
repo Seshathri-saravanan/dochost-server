@@ -1,4 +1,11 @@
-import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  ForeignKey,
+  HasMany,
+} from 'sequelize-typescript';
+import { Page } from 'src/page/page.model';
 import { User } from 'src/user/user.model';
 
 @Table
@@ -8,8 +15,14 @@ export class Project extends Model {
 
   @ForeignKey(() => User)
   @Column
-  createdBy: string;
+  createdBy: number;
 
   @Column
   visibility: string;
+
+  @Column
+  description: string;
+
+  @HasMany(() => Page)
+  pages: Page[];
 }

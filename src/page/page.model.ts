@@ -6,18 +6,18 @@ import {
   ForeignKey,
 } from 'sequelize-typescript';
 import { Project } from 'src/project/project.model';
-
+import { DataTypes } from 'sequelize';
 @Table
 export class Page extends Model {
   @Column
   name: string;
 
-  @Column
-  content: string;
+  @Column({ type: DataTypes.TEXT })
+  content: typeof DataTypes.TEXT;
 
   @ForeignKey(() => Project)
   @Column
-  projectId: string;
+  projectId: number;
 
   @Column
   isPublished: boolean;

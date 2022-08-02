@@ -38,12 +38,19 @@ export class UserService {
       createdBy: user.id,
       name: 'p-1',
       visibility: 'none',
+      description: 'This is a description',
     });
-    const page = await this.projectModel.create({
+    const page = await this.pageModel.create({
       projectId: project.id,
       name: 'page-1',
       isPublished: false,
-      content: 'sample-content',
+      content: JSON.stringify([
+        {
+          type: 'paragraph',
+          align: 'center',
+          children: [{ text: 'Get started by typing here!' }],
+        },
+      ]),
     });
     const projectuser = await this.projectUserModel.create({
       userId: user.id,

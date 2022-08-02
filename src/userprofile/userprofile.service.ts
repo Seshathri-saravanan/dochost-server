@@ -12,4 +12,15 @@ export class UserprofileService {
   async createUserProfile(userId: string, userProfile: { name: string }) {
     return await this.userProfileModel.create({ userId, ...userProfile });
   }
+
+  async getUserProfile(userId: string) {
+    return await this.userProfileModel.findOne({ where: { userId } });
+  }
+
+  async updateUserProfile(userId: string, payload: any) {
+    return await this.userProfileModel.update(
+      { ...payload },
+      { where: { userId } },
+    );
+  }
 }
