@@ -8,24 +8,45 @@ import {
   Req,
   Request,
 } from '@nestjs/common';
+import { ProjectuserService } from 'src/projectuser/projectuser.service';
 import { ProjectService } from './project.service';
-
+import { omit } from 'lodash';
 @Controller('project')
 export class ProjectController {
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private projectuserService: ProjectuserService,
+  ) {}
 
   @Get()
   getallprojects(@Request() req) {
-    return this.projectService.getAllProjects(req.user.userId);
+    return this.projectService.getUserProjects(req.user.userId);
+  }
+
+  @Get()
+  getSharedProjects(@Request() req) {
+    return this.projectService.getUserProjects(req.user.userId);
   }
 
   @Put('/:id')
-  updateProject() {}
+  updateProject(@Request() req, @Body() project, @Param() params) {
+    const projectId = params.id;
+    if (project.visibility === 'PRIVATE')
+      this.projectuserService.updateProjectUsers(
+        projectId,
+        project.userEmailList,
+      );
+    else this.projectuserService.deleteProjectUsers(projectId);
+    return this.projectService.updateProject(projectId, {
+      ...omit(project, 'userEmailList'),
+      createdBy: req.user.userId,
+    });
+  }
 
   @Post()
   createProject(@Request() req, @Body() project) {
     return this.projectService.createProject({
-      ...project,
+      ...omit(project, 'userEmailList'),
       createdBy: req.user.userId,
     });
   }

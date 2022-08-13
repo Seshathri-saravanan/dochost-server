@@ -14,4 +14,5 @@ export class UserprofileController {
   updateuserprofile(@Request() req, @Body() payload) {
     return this.userProfileService.updateUserProfile(req.user.userId, payload);
   }
+
 }
