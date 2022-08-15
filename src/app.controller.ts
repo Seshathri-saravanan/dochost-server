@@ -29,4 +29,10 @@ export class AppController {
   login(@Body() payload: { email: string; password: string }) {
     return this.authService.login({ ...payload });
   }
+
+  @Public()
+  @Post('sign-up')
+  signup(@Body() payload: { email: string; password: string; name: string }) {
+    return this.authService.signup({ ...payload });
+  }
 }

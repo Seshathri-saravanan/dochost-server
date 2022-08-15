@@ -21,8 +21,8 @@ export class UserService {
     private pageModel: typeof Page,
   ) {}
 
-  async create() {
-    return this.userModel.create({ email: 'seshathri', password: 'seshathri' });
+  async create(user: any) {
+    return this.userModel.create(user);
   }
 
   async createall() {

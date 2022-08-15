@@ -9,7 +9,10 @@ export class UserprofileService {
     private userProfileModel: typeof UserProfile,
   ) {}
 
-  async createUserProfile(userId: string, userProfile: { name: string }) {
+  async createUserProfile(
+    userId: string,
+    userProfile: { name: string; email: string },
+  ) {
     return await this.userProfileModel.create({ userId, ...userProfile });
   }
 

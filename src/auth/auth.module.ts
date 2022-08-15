@@ -7,10 +7,12 @@ import { JwtStrategy } from './jwt.strategy';
 import { UserModule } from '../user/user.module';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { Public } from './public-auth-guard';
+import { UserprofileModule } from 'src/userprofile/userprofile.module';
 
 @Module({
   imports: [
     UserModule,
+    UserprofileModule,
     PassportModule,
     JwtModule.register({
       secret: authconstants.jwtsecret,
