@@ -35,15 +35,21 @@ export class ProjectService {
       where: {
         createdBy: createdById,
       },
+      include: [ProjectUser],
     });
   }
 
   async getSharedProjects(userId: number) {
-    return this.projectUserModel.findAll({
+    const projectUsers = await this.projectUserModel.findAll({
       where: {
         userId,
       },
-      include: [Project],
     });
+    const projects = [];
+    for (let puser of projectUsers) {
+      const project = await this.getProjectById(puser.projectId);
+      projects.push(project);
+    }
+    return projects;
   }
 }

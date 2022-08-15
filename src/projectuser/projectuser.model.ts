@@ -1,5 +1,11 @@
-import { Table, Column, Model, ForeignKey } from 'sequelize-typescript';
-import { DataTypes } from 'sequelize';
+import {
+  Table,
+  Column,
+  Model,
+  ForeignKey,
+  BelongsTo,
+  BelongsToMany,
+} from 'sequelize-typescript';
 import { Project } from 'src/project/project.model';
 import { User } from 'src/user/user.model';
 
@@ -7,7 +13,7 @@ import { User } from 'src/user/user.model';
 export class ProjectUser extends Model {
   @ForeignKey(() => User)
   @Column
-  userId: string;
+  userId: number;
 
   @ForeignKey(() => Project)
   @Column

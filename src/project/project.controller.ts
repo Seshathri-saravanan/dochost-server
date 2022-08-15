@@ -23,14 +23,15 @@ export class ProjectController {
     return this.projectService.getUserProjects(req.user.userId);
   }
 
-  @Get()
-  getSharedProjects(@Request() req) {
-    return this.projectService.getUserProjects(req.user.userId);
+  @Get('/shared')
+  async getSharedProjects(@Request() req) {
+    return this.projectService.getSharedProjects(req.user.userId);
   }
 
   @Put('/:id')
   updateProject(@Request() req, @Body() project, @Param() params) {
     const projectId = params.id;
+    console.log('update:::', project, projectId);
     if (project.visibility === 'PRIVATE')
       this.projectuserService.updateProjectUsers(
         projectId,

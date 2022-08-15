@@ -6,6 +6,7 @@ import {
   HasMany,
 } from 'sequelize-typescript';
 import { Page } from 'src/page/page.model';
+import { ProjectUser } from 'src/projectuser/projectuser.model';
 import { User } from 'src/user/user.model';
 
 @Table
@@ -25,4 +26,7 @@ export class Project extends Model {
 
   @HasMany(() => Page)
   pages: Page[];
+
+  @HasMany(() => ProjectUser)
+  projectUsers: ProjectUser[];
 }
