@@ -16,7 +16,8 @@ export class AuthService {
     console.log(user);
     if (user && user.password === pass) {
       const { password, ...result } = user;
-      return { userId: user.id, email: user.email };
+      const userprofile = await this.userProfileService.getUserProfile(user.id);
+      return { userId: user.id, email: user.email, userprofile };
     }
     return null;
   }

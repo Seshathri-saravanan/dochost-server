@@ -17,6 +17,9 @@ import { Page } from './page/page.model';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { NotificationModule } from './notification/notification.module';
+import { Notification } from './notification/notification.model';
 
 /*
 
@@ -24,6 +27,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 @Module({
   imports: [
+    EventEmitterModule.forRoot(),
     SequelizeModule.forRoot({
       dialect: 'postgres',
       host: 'localhost',
@@ -31,7 +35,7 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
       username: 'postgres',
       password: 'password',
       database: 'dochost',
-      models: [User, UserProfile, Project, ProjectUser, Page],
+      models: [User, UserProfile, Project, ProjectUser, Page, Notification],
       autoLoadModels: true,
       synchronize: true,
       sync: {
@@ -47,6 +51,8 @@ import { JwtAuthGuard } from './auth/jwt-auth.guard';
     ProjectuserModule,
     PageModule,
     AuthModule,
+    NotificationModule,
+    NotificationModule,
   ],
   controllers: [AppController],
   providers: [

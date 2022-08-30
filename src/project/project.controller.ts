@@ -38,18 +38,26 @@ export class ProjectController {
         project.userEmailList,
       );
     else this.projectuserService.deleteProjectUsers(projectId);
-    return this.projectService.updateProject(projectId, {
-      ...omit(project, 'userEmailList'),
-      createdBy: req.user.userId,
-    });
+    return this.projectService.updateProject(
+      projectId,
+      {
+        ...omit(project, 'userEmailList'),
+        createdBy: req.user.userId,
+      },
+      req.user.userId,
+    );
   }
 
   @Post()
   createProject(@Request() req, @Body() project) {
-    return this.projectService.createProject({
-      ...omit(project, 'userEmailList'),
-      createdBy: req.user.userId,
-    });
+    console.log('req', req.user);
+    return this.projectService.createProject(
+      {
+        ...omit(project, 'userEmailList'),
+        createdBy: req.user.userId,
+      },
+      req.user.userId,
+    );
   }
 
   @Get('/:id')

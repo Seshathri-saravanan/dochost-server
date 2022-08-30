@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectModel } from '@nestjs/sequelize';
+import { CreateNotificationEvent } from 'src/common/types';
 import { Page } from 'src/page/page.model';
 import { ProjectUser } from 'src/projectuser/projectuser.model';
+import { UserProfile } from 'src/userprofile/userprofile.model';
 import { Project } from './project.model';
 
 @Injectable()
@@ -11,6 +14,7 @@ export class ProjectService {
     private projectModel: typeof Project,
     @InjectModel(ProjectUser)
     private projectUserModel: typeof ProjectUser,
+    private eventEmitter: EventEmitter2,
   ) {}
 
   async getProjectById(id: number) {
@@ -22,11 +26,26 @@ export class ProjectService {
     });
   }
 
-  async createProject(projectData: any) {
+  async createProject(projectData: any, userId: number) {
+    this.eventEmitter.emit('create.notification', {
+      name: 'New Project created',
+      description: `New project ${
+        projectData.name
+      } was created by ##### on ${new Date()}`,
+      receivers: [userId],
+    } as CreateNotificationEvent);
+
     return this.projectModel.create(projectData);
   }
 
-  async updateProject(id: number, projectData: any) {
+  async updateProject(id: number, projectData: any, userId: number) {
+    this.eventEmitter.emit('create.notification', {
+      name: 'Project updated',
+      description: `Project ${
+        projectData.name
+      } was updated by ##### on ${new Date()}`,
+      receivers: [userId],
+    } as CreateNotificationEvent);
     return this.projectModel.update(projectData, { where: { id } });
   }
 
