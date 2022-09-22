@@ -9,13 +9,7 @@ module.exports = {
         }),
       ]);
     });
-    queryInterface.sequelize.transaction((t) => {
-      return Promise.all([
-        queryInterface.removeColumn('Notifications', 'userId', {
-          transaction: t,
-        }),
-      ]);
-    });
+    
     /**
      * Add altering commands here.
      *

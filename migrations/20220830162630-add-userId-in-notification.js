@@ -8,7 +8,7 @@ module.exports = {
           'Notifications',
           'userId',
           {
-            type: Sequelize.NUMBER,
+            type: Sequelize.STRING,
           },
           {
             transaction: t,
