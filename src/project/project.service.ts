@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { InjectModel } from '@nestjs/sequelize';
 import { CreateNotificationEvent } from 'src/common/types';
@@ -70,5 +70,17 @@ export class ProjectService {
       projects.push(project);
     }
     return projects;
+  }
+
+  async deleteProject(projectId: number, userId: number) {
+    const project = await this.projectModel.findOne({
+      where: { id: projectId },
+    });
+    if (project.createdBy == userId) {
+      return await this.projectModel.destroy({ where: { id: projectId } });
+    }
+    return new BadRequestException(
+      'The User dont have access to delete the project',
+    );
   }
 }

@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -58,6 +59,12 @@ export class ProjectController {
       },
       req.user.userId,
     );
+  }
+
+  @Delete('/:id')
+  deleteProject(@Request() req, @Param() params) {
+    console.log('in delete', params);
+    return this.projectService.deleteProject(params.id, req.user.userId);
   }
 
   @Get('/:id')
